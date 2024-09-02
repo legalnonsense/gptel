@@ -1011,7 +1011,7 @@ Model parameters can be let-bound around calls to this function."
 
 ;; TODO: Handle multiple requests(#15). (Only one request from one buffer at a time?)
 ;;;###autoload
-(defun gptel-send (&optional arg)
+(defun gptel-send (&optional arg contents)
   "Submit this prompt to the current LLM backend.
 
 By default, the contents of the buffer up to the cursor position
@@ -1030,7 +1030,7 @@ waiting for the response."
       (call-interactively #'gptel-menu)
   (message "Querying %s..." (gptel-backend-name gptel-backend))
   (gptel--sanitize-model)
-  (gptel-request nil :stream gptel-stream)
+  (gptel-request contents :stream gptel-stream)
   (gptel--update-status " Waiting..." 'warning)))
 
 (declare-function json-pretty-print-buffer "json")
